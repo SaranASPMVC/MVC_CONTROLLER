@@ -1,0 +1,199 @@
+﻿@model IEnumerable<Pass_Session_MVC.Models.ProductModel>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <style>
+        #bod {
+            background-repeat: no-repeat;
+            background-size: 1600px 800px;
+        }
+
+        button {
+            display: block;
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width" />
+    <title>Savebook</title>
+
+    <link style=https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css />
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"  rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css" rel="stylesheet" />
+</head>
+<body id="bod" style="background-image: url('../../image/bg.jpeg');">
+    <br />
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+
+    <div class="row">
+        <input type="button" value="Transport Planning" onclick="location.href = '/Home/Index';" />
+        <br />
+        <br />
+    </div>
+    <!-- Add date filter inputs and button -->
+    <div class="row">
+        <div class="col-lg-3">
+            <label for="startDate" style="color:white"><b>Start Date:</b></label>
+            <input type="date" id="startDate" name="startDate">
+        </div>
+        <div class="col-lg-3">
+            <label for="endDate" style="color:white"><b>End Date:</b></label>
+            <input type="date" id="endDate" name="endDate">
+        </div>
+        @*<div class="col-lg-3">
+                <button onclick="filterByDate()">Filter</button>
+            </div>*@
+    </div>
+
+    <div class="row">
+        <input type="button" onclick="filterByDate()" value="Filter" />
+        <input type="button" onclick="clearfilter()" value="Clear Filter" />
+        @*<input type="button" value="Transport Planning" onclick="location.href = '/Home/Index';" />*@
+        <br />
+        <br />
+    </div>
+
+
+    <div class="row">
+        <table>
+            <tr>
+
+                <td style="float: right;"><input type="button" value="Copy" /></td>
+                <td style="float: right;"><input type="button" value="CSV" /></td>
+                <td style="float: right; "> <input type="button" onclick="tableToExcel('example','name','myfile.xls')" value="EXCEL" /></td>
+                <td style="float: right; "><input type="button" id="btnExport" onclick="downpdf();" value="PDF" /></td>
+                <td style="float: right;"><input type="button" value="Print" /></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="row">
+        <table id="example" cellpadding="0" cellspacing="0">
+            <tr bgcolor="pink">
+                <th colspan="1" align="center" style="font-palette:light">Date</th>
+                <th colspan="1" align="center" style="font-palette:light">Quantity</th>
+                <th colspan="1" align="center" style="font-palette:light">Notes</th>
+                <th colspan="1" align="center" style="font-palette:light">Products</th>
+                <th colspan="1" align="center" style="font-palette:light">Silo</th>
+                <th colspan="1" align="center">Earliest Delivery Time</th>
+                <th colspan="1" align="center">Required By</th>
+                <th colspan="1" align="center">Area</th>
+                <th colspan="1" align="center">Branch</th>
+                <th colspan="1">Edit</th>
+                @*<th colspan="1" align="center">edatepick</th>*@
+
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td colspan="1" align="center"> @Html.DisplayFor(modelItem => item.datepick)</td>
+
+                    <td colspan="1" align="center"> @Html.DisplayFor(modelItem => item.quantity)</td>
+                    <td colspan="1" align="center"> @Html.DisplayFor(modelItem => item.notes)</td>
+                    <td colspan="1" align="center"> @Html.DisplayFor(modelItem => item.productname)</td>
+                    <td colspan="1" align="center"> @Html.DisplayFor(modelItem => item.silo)</td>
+                    <td colspan="1" align="center"> @Html.DisplayFor(modelItem => item.timer1)</td>
+                    <td colspan="1" align="center"> @Html.DisplayFor(modelItem => item.timer2)</td>
+                    <td colspan="1" align="center"> @Html.DisplayFor(modelItem => item.area)</td>
+                    <td colspan="1" align="center"> @Html.DisplayFor(modelItem => item.branch)</td>
+                    <td colspan="1"><i class='fas fa-edit'></i></td>
+                </tr>
+            }
+        </table>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script>
+   
+        function closeform() {
+            alert("close");
+        }
+
+        function filterByDate() {
+
+            const startDate = document.getElementById("startDate").value;
+            const endDate = document.getElementById("endDate").value;
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const rows = document.querySelectorAll("table tbody tr ");
+            for (let i = 2; i < rows.length; i++) {
+                const dateCell = rows[i].querySelector("td:first-child");
+                const dateValue = dateCell.textContent;
+                const date = new Date(dateValue);
+                if (date >= start && date <= end) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+        function clearfilter() {
+
+            document.getElementById("startDate").value = "";
+            document.getElementById("endDate").value = "";
+            const rows = document.querySelectorAll("table tbody tr ");
+            for (let i = 2; i < rows.length; i++) {
+                rows[i].style.display = "";
+
+            }
+        }
+     
+        function tableToExcel(table, name, filename) {
+            let uri = 'data:application/vnd.ms-excel;base64,',
+                template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><title></title><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>',
+                base64 = function (s) { return window.btoa(decodeURIComponent(encodeURIComponent(s))) }, format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+
+            var link = document.createElement('a');
+            link.download = filename;
+            link.href = uri + base64(format(template, ctx));
+            link.click();
+        }
+
+        function downpdf() {
+            html2canvas($('#example')[0], {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download("ProductList.pdf");
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

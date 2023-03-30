@@ -1,0 +1,162 @@
+﻿@model Pass_Session_MVC.Models.ProductModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
+    <style>
+        #bod {
+            background-repeat: no-repeat;
+            background-size: 1600px 800px;
+            ;
+        }
+    </style>
+    
+</head>
+
+<body id="bod" style="background-image: url('../../image/bg.jpeg');">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    @*@using (Html.BeginForm("Send", "Home", FormMethod.Post))
+        {
+            <input type="submit" value="Send" />
+        }*@
+    <br /><br /><br />
+    <h3 style="text-align:center">CREATE DEMAND</h3>
+    <br />
+    <br />
+    <br />
+    <form action="saveproduct" method="post">
+        @*<div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">
+                <label> Gender</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                @Html.DropDownList("ListItem")
+            </div>
+            <div class="col-lg-4"></div>
+        </div><br />
+              <div class="row">
+                  <div class="col-lg-4"></div>
+                  <div class="col-lg-4">
+                      <label> Author</label>
+                      <select name="Author">
+                          <option>Krishna Garad</option>
+                          <option>Vulpes</option>
+                          <option>Arjun</option>
+                          <option>Sonakshi</option>
+                          <option>Monika</option>
+                      </select>
+                  </div>
+              </div>*@
+        
+            <table cellspacing="5" cellpadding="5">
+                @*<tr><td colspan="5"><b>ADD DETAILS</b></td></tr>*@
+                <tr>
+                    <td colspan="2" style="text-align:center"><label><b>Area</b></label></td>
+                    <td>
+                        <select name="area">
+                            <option>AR PL IBIA</option>
+                            <option>Area 1</option>
+                            <option>Area 2</option>
+                            <option>Area 3</option>
+                            <option>Area 4</option>
+                            <option>Area 5</option>
+                            <option>Area 6</option>
+                            <option>Area 7</option>
+                            <option>Area 8</option>
+                            <option>Area 9</option>
+                            <option>Area 10</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center"><label><b>Branch</b></label></td>
+                    <td>
+                        <select name="branch">
+                            <option>BR PL IBIA</option>
+                            <option>Branch 1</option>
+                            <option>Branch 2</option>
+                            <option>Branch 3</option>
+                            <option>Branch 4</option>
+                            <option>Branch 5</option>
+                            <option>Branch 6</option>
+                            <option>Branch 7</option>
+                            <option>Branch 8</option>
+                            <option>Branch 9</option>
+                            <option>Branch 10</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center"><label><b>Date</b></label></td>
+                    <td>
+                        <input type="date" name="datepick" value=""required/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center"><label><b>End Date</b></label></td>
+                    <td>
+                        <input type="date" name="edatepick" value=""required />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center"><label><b>Quantity</b></label></td>
+                    <td>
+                        <input type="text" name="quantity" value=""required/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center"><label><b>Product</b></label></td>
+                    <td>
+                        <select name="productname">
+                            <option>Milk</option>
+                            <option>Cheese</option>
+                            <option>Butter</option>
+                            <option>Colostrum</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center"><label><b>Siko</b></label></td>
+                    <td>
+                        <select name="silo">
+                            <option>Silo 1</option>
+                            <option>Silo 2</option>
+                            <option>Silo 3</option>
+                            <option>Silo 4</option>
+                            <option>Silo 5</option>
+                            <option>Silo 6</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center"><b>Earliest Delivery Time</b></td>
+                    <td><input type="time" name="timer1" value=""required /></td>
+
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center"><b>Required By</b></td>
+                    <td><input type="time" name="timer2" value=""required/></td>
+
+                </tr>
+                <tr>
+                    <td  colspan="2"  style="text-align:center"><b>Notes</b></td>
+                    <td><textarea rows="3" name="notes"></textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2" rowspan="2" style="text-align:center"></td>
+                    <td><input type="submit" value="Create" on /></td>
+                </tr>
+            </table>
+
+       </form>
+</body>
+</html>
